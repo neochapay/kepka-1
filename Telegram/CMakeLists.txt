@@ -7,12 +7,18 @@ if (LINUX)
     endif()
 endif()
 
+if (SAILFISH_OS_BUILD)
+	add_definitions(-DQ_OS_SAILFISH)
+	set(CMAKE_INSTALL_RPATH "/usr/local/kepka/lib")
+endif()
+
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -H")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 ##================================================
 ## Codegen Tools
 ##================================================
 include_directories(SourceFiles)
+include_directories(ThirdParty/GSL/include)
 add_subdirectory(SourceFiles/codegen)
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/styles)
@@ -628,6 +634,8 @@ if(MSVC AND MSVC_VERSION GREATER_EQUAL 1912)
     target_compile_options(Kepka PRIVATE /permissive-)
 endif()
 
+include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS} ${Qt5Core_PRIVATE_INCLUDE_DIRS})
+
 target_include_directories(Kepka PRIVATE ${OPENAL_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${OPENSSL_INCLUDE_DIR}
     ${OPUS_INCLUDE_DIR} ${FFMPEG_INCLUDE_DIRS} ${ALSA_INCLUDE_DIRS} ${PULSEAUDIO_INCLUDE_DIR} )
 
@@ -635,7 +643,6 @@ target_link_libraries(Kepka
     Qt5::Core
     Qt5::Widgets
     Qt5::Network
-    Qt5::GuiPrivate
     Threads::Threads
     tgvoip
     ${OPENAL_LIBRARY}

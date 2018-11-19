@@ -4,7 +4,7 @@ Name=Kepka
 GenericName=Kepka
 Keywords=IM;Chat;
 Comment=Unofficial Telegram desktop messaging app
-Exec=/usr/bin/kepka -- %u
+Exec=sh -c "env LD_LIBRARY_PATH=/usr/local/kepka/lib:\\$LD_LIBRARY_PATH /usr/bin/kepka -- %u"
 Icon=kepka
 Terminal=false
 StartupWMClass=Kepka

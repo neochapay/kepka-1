@@ -159,7 +159,9 @@ private:
 	void checkAuthSession();
 	void updatePalette();
 	void updateUnreadCounter();
+protected:
 	void initSize();
+private:
 
 	bool computeIsActive() const;
 

@@ -25,8 +25,8 @@ using "basic.style";
 using "ui/widgets/widgets.style";
 using "history/history.style";
 
-windowMinWidth: 380px;
-windowMinHeight: 480px;
+windowMinWidth: 150px;
+windowMinHeight: 150px;
 windowDefaultWidth: 800px;
 windowDefaultHeight: 600px;
 windowShadow: icon {{ "window_shadow", windowShadowFg }};
@@ -61,7 +61,7 @@ notifyTextLeft: 12px;
 notifyTextTop: 7px;
 notifyWaitLongHide: 3000;
 notifyFastAnim: 150;
-notifyWidth: 320px;
+notifyWidth: 250px;
 notifyMinHeight: 80px;
 notifyDeltaX: 6px;
 notifyDeltaY: 7px;
@@ -95,7 +95,7 @@ notifySendReply: IconButton {
 titleUnreadCounterTop: 5px;
 titleUnreadCounterRight: 35px;
 
-mainMenuWidth: 274px;
+mainMenuWidth: 250px;
 mainMenuCoverHeight: 134px;
 mainMenuUserpicLeft: 24px;
 mainMenuUserpicTop: 20px;
@@ -300,7 +300,7 @@ themeEditorCopyNameFont: font(fsize semibold);
 windowEmojiSuggestionsPopup: PopupMenu(defaultPopupMenu) {
 	menu: Menu(defaultMenu) {
 		itemPadding: margins(48px, 8px, 17px, 7px);
-		widthMax: 512px;
+		widthMax: 300px;
 	}
 }
 

@@ -146,7 +146,11 @@ inline DBIScale cScale() {
 	return cEvalScale(cRealScale());
 }
 
+#if defined(Q_OS_SAILFISH)
+template <typename T> T convertScaleOrig(T v) {
+#else
 template <typename T> T convertScale(T v) {
+#endif
 	switch (cScale()) {
 	case dbisOneAndQuarter: return qRound(double(v) * 1.25 - 0.01);
 	case dbisOneAndHalf: return qRound(double(v) * 1.5 - 0.01);
@@ -157,6 +161,14 @@ template <typename T> T convertScale(T v) {
 	}
 	return v;
 }
+
+#if defined(Q_OS_SAILFISH)
+template <typename T> T convertScale(T v) {
+	const T ciSailfishOsFactor = 1;
+	return convertScaleOrig(v * ciSailfishOsFactor);
+}
+#endif
+
 
 namespace Ui {
 namespace Emoji {

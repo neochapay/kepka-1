@@ -34,6 +34,8 @@
 #include "storage/localstorage.h"
 #include "styles/style_window.h"
 
+#include <QApplication>
+
 namespace Platform {
 namespace {
 
@@ -126,6 +128,9 @@ MainWindow::MainWindow() {
 
 	connect(&_psUpdateIndicatorTimer, SIGNAL(timeout()), this, SLOT(psUpdateIndicator()));
 	_psUpdateIndicatorTimer.setSingleShot(true);
+
+	_pQtInputMethod = static_cast<QApplication *>(QApplication::instance())->inputMethod();
+	connect(_pQtInputMethod, SIGNAL(visibleChanged()), this, SLOT(psQtInputMethodVisibleChanged()));
 }
 
 bool MainWindow::hasTrayIcon() const {
@@ -270,6 +275,24 @@ void MainWindow::psFirstShow() {
 	}
 
 	setPositionInited();
+}
+
+void MainWindow::psQtInputMethodVisibleChanged() {
+	LOG(("psQtInputMethodVisibleChanged: new value: %1").arg(Logs::b(_pQtInputMethod->isVisible())));
+	QRect geom = geometry();
+	LOG(("psQtInputMethodVisibleChanged: initial geom: %1x%2 - %3x%4").arg(geom.left()).arg(geom.top()).arg(geom.right()).arg(geom.bottom()));
+	if (_pQtInputMethod->isVisible()) {
+		_kbRect = _pQtInputMethod->keyboardRectangle().toAlignedRect();
+		LOG(("psQtInputMethodVisibleChanged: kbRect: %1x%2 - %3x%4").arg(_kbRect.left()).arg(_kbRect.top()).arg(_kbRect.right()).arg(_kbRect.bottom()));
+		geom.adjust(0, 0, 0, -1 * _kbRect.top());
+	}
+	else {
+		geom.adjust(0, 0, 0, 1 * _kbRect.top());
+		_kbRect = QRect();
+	}
+	LOG(("psQtInputMethodVisibleChanged: result geom: %1x%2 - %3x%4").arg(geom.left()).arg(geom.top()).arg(geom.right()).arg(geom.bottom()));
+	setGeometry(geom);
+	//resizeEvent(nullptr);
 }
 
 void MainWindow::psInitSysMenu() {}

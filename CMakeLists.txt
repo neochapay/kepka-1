@@ -95,6 +95,7 @@ if (CCACHE)
     set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE})
 endif()
 
+option(SAILFISH_OS_BUILD "Build with SailfishOS hacks" OFF)
 
 option(BUILD_DOC "Build documentation" OFF)
 mark_as_advanced(BUILD_DOC)

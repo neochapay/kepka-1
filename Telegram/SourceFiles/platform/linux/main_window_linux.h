@@ -25,6 +25,7 @@
 #include "platform/platform_main_window.h"
 
 #include <QTimer>
+#include <QInputMethod>
 
 class QSystemTrayIcon;
 class QMenu;
@@ -55,6 +56,8 @@ public slots:
 	void psStatusIconCheck();
 	void psUpdateIndicator();
 
+	void psQtInputMethodVisibleChanged();
+
 protected:
 	void unreadCounterChangedHook() override;
 
@@ -80,6 +83,9 @@ private:
 
 	QTimer _psUpdateIndicatorTimer;
 	TimeMs _psLastIndicatorUpdate = 0;
+
+	QInputMethod *_pQtInputMethod = nullptr;
+	QRect _kbRect;
 };
 
 } // namespace Platform

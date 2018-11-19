@@ -1,5 +1,5 @@
 [Protocol]
-exec=/usr/bin/kepka -- %u
+exec=sh -c "env LD_LIBRARY_PATH=/usr/local/kepka/lib:\\$LD_LIBRARY_PATH /usr/bin/kepka -- %u"
 protocol=tg
 input=none
 output=none

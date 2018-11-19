@@ -205,7 +205,7 @@ void MainWindow::initSize() {
 	setMinimumHeight((_title ? _title->height() : 0) + st::windowMinHeight);
 
 	auto position = cWindowPos();
-	DEBUG_LOG(("Window Pos: Initializing first %1, %2, %3, %4 (maximized %5)")
+	LOG(("Window Pos: Initializing first %1, %2, %3, %4 (maximized %5)")
 	              .arg(position.x)
 	              .arg(position.y)
 	              .arg(position.w)
@@ -221,7 +221,7 @@ void MainWindow::initSize() {
 		for (auto screen : QGuiApplication::screens()) {
 			if (position.moncrc == screenNameChecksum(screen->name())) {
 				auto screenGeometry = screen->geometry();
-				DEBUG_LOG(("Window Pos: Screen found, screen geometry: %1, %2, %3, %4")
+				LOG(("Window Pos: Screen found, screen geometry: %1, %2, %3, %4")
 				              .arg(screenGeometry.x())
 				              .arg(screenGeometry.y())
 				              .arg(screenGeometry.width())
@@ -237,7 +237,7 @@ void MainWindow::initSize() {
 					position.y += screenGeometry.y();
 					if (position.x + st::windowMinWidth <= screenGeometry.x() + screenGeometry.width() &&
 					    position.y + st::windowMinHeight <= screenGeometry.y() + screenGeometry.height()) {
-						DEBUG_LOG(("Window Pos: Resulting geometry is %1, %2, %3, %4")
+						LOG(("Window Pos: Resulting geometry is %1, %2, %3, %4")
 						              .arg(position.x)
 						              .arg(position.y)
 						              .arg(position.w)
@@ -250,7 +250,7 @@ void MainWindow::initSize() {
 		}
 		maximized = position.maximized;
 	}
-	DEBUG_LOG(
+	LOG(
 	    ("Window Pos: Setting first %1, %2, %3, %4").arg(geom.x()).arg(geom.y()).arg(geom.width()).arg(geom.height()));
 	setGeometry(geom);
 }
