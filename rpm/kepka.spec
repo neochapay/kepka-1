@@ -16,9 +16,8 @@ BuildRequires: desktop-file-utils
 #BuildRequires: libappstream-glib
 BuildRequires: ninja
 BuildRequires: cmake >= 3.10
-#BuildRequires: gcc-c++
-#BuildRequires: gcc
-BuildRequires: opt-gcc7
+BuildRequires: gcc-c++
+BuildRequires: gcc
 
 # Development packages for main application...
 #Disabled. GSL already bundled #BuildRequires: guidelines-support-library-devel
@@ -74,9 +73,6 @@ mkdir -p %{_target_platform}
 %build
 # Configuring application...
 pushd %{_target_platform}
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/gcc7/lib
-    export CC=/opt/gcc7/bin/gcc
-    export CXX=/opt/gcc7/bin/g++
 	%cmake -G Ninja \
 	 	-DSAILFISH_OS_BUILD=ON \
 	 	-DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3 \
@@ -91,23 +87,6 @@ popd
 %install
 # Installing application...
 %ninja_install -C %{_target_platform}
-
-#Bundling libs
-mkdir -p %{buildroot}%{_prefix}/local/%{name}/lib
-#        libavcodec.so.57 => /usr/lib/libavcodec.so.57 (0x6e8c1000)
-install -s -m 644 /usr/lib/libavcodec.so.57 %{buildroot}%{_prefix}/local/%{name}/lib
-#        libavformat.so.57 => /usr/lib/libavformat.so.57 (0x6e834000)
-install -s -m 644 /usr/lib/libavformat.so.57 %{buildroot}%{_prefix}/local/%{name}/lib
-#        libavutil.so.55 => /usr/lib/libavutil.so.55 (0x6e7b0000)
-install -s -m 644 /usr/lib/libavutil.so.55 %{buildroot}%{_prefix}/local/%{name}/lib
-#        libswresample.so.2 => /usr/lib/libswresample.so.2 (0x6e696000)
-install -s -m 644 /usr/lib/libswresample.so.2 %{buildroot}%{_prefix}/local/%{name}/lib
-#        libswscale.so.4 => /usr/lib/libswscale.so.4 (0x6e608000)
-install -s -m 644 /usr/lib/libswscale.so.4 %{buildroot}%{_prefix}/local/%{name}/lib
-#		 libstdc++.so.6 => /opt/gcc7/lib/libstdc++.so.6 (0x6d8ce000)
-install -s -m 644 /opt/gcc7/lib/libstdc++.so.6 %{buildroot}%{_prefix}/local/%{name}/lib
-#		 libgcc_s.so.1 => /opt/gcc7/lib/libgcc_s.so.1 (0x6d829000)
-install -s -m 644 /opt/gcc7/lib/libgcc_s.so.1 %{buildroot}%{_prefix}/local/%{name}/lib
 
 %post -p /sbin/ldconfig
 
@@ -126,4 +105,3 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/kservices5/tg.protocol
 %{_datadir}/metainfo/%{name}.appdata.xml
-%{_prefix}/local/%{name}/lib
